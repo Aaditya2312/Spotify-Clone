@@ -1,10 +1,16 @@
-import React from 'react'
-import { assets } from "../assets/assets"
+import React, { useState } from 'react'
+import { albumsData, assets, songsData } from "../assets/assets"
 import { useNavigate } from 'react-router-dom'
+import SeacrhComponent from './SearchComponent'
 
 const Sidebar = () => {
 
     const navigate = useNavigate()
+    const [searchVisible, setSearchVisible] = useState(false)
+
+    const searchClick = () => {
+        setSearchVisible(!searchVisible)
+    }
 
     return (
         <div className='w-[25%] h-full p-2 flex-col gap-2 text-white hidden lg:flex'>
@@ -13,11 +19,20 @@ const Sidebar = () => {
                     <img className='w-6' src={assets.home_icon} alt='' />
                     <p className='font-bold'>Home</p>
                 </div>
-                <div className='flex items-center gap-3 pl-8 cursor-pointer'>
+
+                <div onClick={searchClick} className='flex items-center gap-3 pl-8 cursor-pointer'>
                     <img className='w-6' src={assets.search_icon} alt='' />
                     <p className='font-bold'>Search</p>
                 </div>
+                {searchVisible && (
+                    <SeacrhComponent
+                        albumsData={albumsData}
+                        songsData={songsData}
+                        assets={assets}
+                    />
+                )}
             </div>
+
             <div className='bg-[#121212] h-[85%] rounded'>
                 <div className='p-4 flex items-center justify-between'>
                     <div className='flex items-center gap-3'>
